@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Lexicon — Daily Vocab Challenge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <button class="icon-btn" id="helpBtn" aria-label="How to play">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </button>
+      </div>
+      <div class="header-center">
+        <h1 class="logo">LEXICON</h1>
+        <p class="tagline">Daily Vocab Challenge</p>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="statsBtn" aria-label="Statistics">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Game Area -->
+    <main class="game">
+      <!-- Puzzle Number & Date -->
+      <div class="puzzle-info">
+        <span class="puzzle-number" id="puzzleNumber">#1</span>
+        <span class="puzzle-date" id="puzzleDate"></span>
+      </div>
+
+      <!-- Definition Card -->
+      <div class="definition-card">
+        <div class="card-label">DEFINITION</div>
+        <p class="definition-text" id="definitionText"></p>
+        <div class="word-meta">
+          <span class="word-type" id="wordType"></span>
+          <span class="separator">•</span>
+          <span class="letter-count" id="letterCount"></span>
+          <span class="separator">•</span>
+          <span class="word-origin" id="wordOrigin"></span>
+        </div>
+      </div>
+
+      <!-- Letter Blanks -->
+      <div class="letter-blanks" id="letterBlanks"></div>
+
+      <!-- Hints Section -->
+      <div class="hints-section">
+        <button class="hint-btn" id="letterHintBtn">
+          <span class="hint-icon">💡</span>
+          <span class="hint-label">Reveal Letter</span>
+        </button>
+      </div>
+
+      <!-- Submit -->
+      <div class="guess-section">
+        <button class="submit-btn-large" id="submitBtn">Submit Guess</button>
+      </div>
+
+      <!-- Guess History -->
+      <div class="guess-history" id="guessHistory"></div>
+
+      <!-- Result (Win) -->
+      <div class="result-section" id="resultSection" hidden>
+        <div class="result-card">
+          <div class="result-emoji" id="resultEmoji">🎉</div>
+          <h2 class="result-title" id="resultTitle">Brilliant!</h2>
+          <p class="result-word" id="resultWord"></p>
+          <div class="result-stats">
+            <div class="stat">
+              <span class="stat-value" id="statGuesses">0</span>
+              <span class="stat-label">Guesses</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="statLetters">0</span>
+              <span class="stat-label">Hints</span>
+            </div>
+          </div>
+          <button class="share-btn" id="shareBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Share Result
+          </button>
+          <div class="next-word-timer">
+            <span>Next word in </span>
+            <span id="countdown" class="countdown"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- How To Play Modal -->
+    <div class="modal-overlay" id="helpModal" hidden>
+      <div class="modal">
+        <button class="modal-close" id="helpClose">&times;</button>
+        <h2>How to Play</h2>
+        <div class="modal-body">
+          <p>Guess the word from its <strong>definition</strong>!</p>
+          <div class="rule">
+            <span class="rule-icon">📖</span>
+            <p>You're given the definition, word type, and number of letters.</p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon">🌍</span>
+            <p>You're also given the word's <strong>language of origin</strong>.</p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon">💡</span>
+            <p>Use the <strong>Letter</strong> hint to reveal one letter at a time.</p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon">🎯</span>
+            <p>Try to guess with as <strong>few hints</strong> as possible!</p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon">📅</span>
+            <p>A new word appears every day at midnight.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal-overlay" id="statsModal" hidden>
+      <div class="modal">
+        <button class="modal-close" id="statsClose">&times;</button>
+        <h2>Statistics</h2>
+        <div class="modal-body">
+          <div class="stats-grid">
+            <div class="stats-item">
+              <span class="stats-value" id="totalPlayed">0</span>
+              <span class="stats-label">Played</span>
+            </div>
+            <div class="stats-item">
+              <span class="stats-value" id="totalWins">0</span>
+              <span class="stats-label">Won</span>
+            </div>
+            <div class="stats-item">
+              <span class="stats-value" id="currentStreak">0</span>
+              <span class="stats-label">Streak</span>
+            </div>
+            <div class="stats-item">
+              <span class="stats-value" id="bestStreak">0</span>
+              <span class="stats-label">Best</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="words.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
