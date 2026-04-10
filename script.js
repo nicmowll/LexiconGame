@@ -498,7 +498,7 @@
   function getTier(totalGuesses, totalHints, allRevealed) {
     if (allRevealed) {
       return { emoji: '📚', title: 'Much to Learn' };
-    } else if (totalHints === 0 && totalGuesses === 0) {
+    } else if (totalHints === 0 && totalGuesses <= 1) {
       return { emoji: '🧙', title: 'Word Wizard' };
     } else if (totalHints === 0) {
       return { emoji: '🎓', title: 'Scholar' };
@@ -510,7 +510,7 @@
   }
 
   function showResult(animate) {
-    const totalGuesses = state.guesses.length;
+    const totalGuesses = state.guesses.length + 1;
     const totalHints = state.hintsUsed;
     const allRevealed = state.revealedLetters.length >= state.word.word.length;
 
@@ -535,26 +535,31 @@
   // ===== Share =====
   function shareResult() {
     const puzzleNum = getPuzzleNumber(state.todayKey);
-    const guesses = state.guesses.length;
+    const guesses = state.guesses.length + 1;
     const hints = state.hintsUsed;
     const word = state.word.word;
 
     // Build share grid
-    let grid = '';
-    const redSquare = '\u{1F7E5}';
+    const letterHints = state.revealedLetters.length;
+    const allRevealed = letterHints >= word.length;
+    const { emoji: tierEmoji, title: tierTitle } = getTier(guesses, hints, allRevealed);
+
+    const isWizard = tierTitle === 'Word Wizard';
+    const redCircle = '\u{1F534}';
     const greenCircle = '\u{1F7E2}';
+    const purpleCircle = '\u{1F7E3}';
+
+    let grid = '';
     const letters = word.length;
     for (let i = 0; i < letters; i++) {
-      if (state.revealedLetters.includes(i)) {
-        grid += redSquare;
+      if (isWizard) {
+        grid += purpleCircle;
+      } else if (state.revealedLetters.includes(i)) {
+        grid += redCircle;
       } else {
         grid += greenCircle;
       }
     }
-
-    const letterHints = state.revealedLetters.length;
-    const allRevealed = letterHints >= word.length;
-    const { emoji: tierEmoji, title: tierTitle } = getTier(guesses, hints, allRevealed);
 
     const text = `LEXICON #${puzzleNum}\n\n` +
       `${tierEmoji} ${tierTitle}\n\n` +
