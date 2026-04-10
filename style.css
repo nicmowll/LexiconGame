@@ -217,14 +217,17 @@ body {
 .letter-blanks {
   display: flex;
   gap: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   padding: 8px 0;
+  width: 100%;
 }
 
 .letter-box {
   width: 38px;
+  min-width: 0;
   height: 46px;
+  flex-shrink: 1;
   border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   text-align: center;

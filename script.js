@@ -562,7 +562,7 @@
       `🎯 ${guesses} guess${guesses !== 1 ? 'es' : ''}\n` +
       `💡 ${letterHints} letter${letterHints !== 1 ? 's' : ''} revealed\n\n` +
       `${grid}\n\n` +
-      `Play at: https://nicmowll.github.io/LexiconGame/`;
+      `Play at: https://nicmowll.github.io/LexiconGame`;
 
     if (navigator.share) {
       navigator.share({ text }).catch(() => {
